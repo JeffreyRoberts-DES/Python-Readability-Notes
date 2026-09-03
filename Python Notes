@@ -1,0 +1,415 @@
+Python Learning Notes
+
+## Table of Contents
+1. [Print Function](#1-print-function)
+2. [Variables](#2-variables)
+3. [Input Function](#3-input-function)
+4. [Data Types](#4-data-types)
+5. [Functions & Modules](#5-functions--modules)
+6. [String Functions](#6-string-functions)
+7. [Numeric Functions](#7-numeric-functions)
+
+---
+
+## 1. Print Function
+
+- `\n` adds a new line
+- `\t` adds a tab
+- Wrapping text in `"""..."""` lets a `print()` span multiple lines
+
+```python
+print("Your Learning Path:\n\t-Python Basics\n\t-Data Engineering\n\t-AI")
+
+# Same thing, spread across lines with triple quotes
+print("""Your Learning Path:
+
+\t-Python Basics
+
+\t-Data Engineering
+
+\t-AI""")
+```
+
+---
+
+## 2. Variables
+
+Variables store a value in memory under a name so it can be reused.
+
+```python
+name = "Jack"
+language = "Python"
+print("My name is", name)
+print(name, "is Learning", language)
+print(name, "wants to be a", language, "Expert")
+
+name = "Jeff"
+print("My name is", name)
+print(name, "is Learning Python")
+print(name, "wants to be a Python Expert")
+```
+
+### Challenge: build strings with f-strings
+Use `{}` inside an f-string (`f"..."`) to insert a variable without manual spacing/concatenation.
+
+```python
+name = "baraa"
+print(f"info@datawith{name}.com")
+print(f"support@datawith{name}.com")
+print(f"www.datawith{name}.com")
+```
+
+---
+
+## 3. Input Function
+
+- **Dynamic value:** `name = input("Enter your name:")`
+- **Static value:** `country = "'Merica"`
+
+```python
+name = input("Enter your name:")
+country = "'Merica"
+print(name, "comes from", country)
+```
+
+---
+
+## 4. Data Types
+
+### Core types
+| Type | Meaning |
+|---|---|
+| `str` | Text/letters. Concatenating strings joins them — no math is performed. |
+| `int` | Numeric values without quotes. |
+
+Numbers written **without quotes** are integers; the same digits **with quotes** are strings.
+
+### Single-value ("primitive") types
+- No value: `None`
+- Numeric: `int` (`50`), `float` (`3.14`), `complex` (`3 + 5j`)
+- Text/logic: `str` (`"Hello"`), `bool` (`True`/`False`)
+- Date/time: `date` (`2026-12-25`), `time` (`18:05:30`), `datetime` (`2026-12-25 18:05:30`)
+
+### Multi-value types (Data Structures / Collections / Containers)
+- `list`: `[1, 2, 3]`
+- `set`: `{1, 2}`
+- `tuple`: `('a', 'b', 'c')`
+- `dict`: `{'a': 1, 'b': 2, 'c': 3}`
+
+### Quick reference
+```python
+a = 10       # int
+b = 3.15     # float
+c = "Tupac"  # str
+d = 'Biggie' # str
+e = "1234"   # str
+f = True     # bool
+g = False    # bool
+h = None     # NoneType
+i = ""       # str - Blank
+j = " "      # str - Whitespace (not the same as blank or None!)
+```
+
+> **Note:** `""` (blank) is still a string with zero characters. `" "` (whitespace) is a string with one or more space characters. Neither is the same as `None`, which represents the absence of a value.
+
+---
+
+## 5. Functions & Modules
+
+### Functions vs. Methods
+- **Function:** independent block of code — `function_name(value)` — e.g. `print("Hello")`, `type(50)`
+- **Method:** a function that belongs to an object/class — `value.method_name()` — e.g. `"Hello".upper()`, `(50).bit_length()`
+
+### Categories
+| Category | Examples |
+|---|---|
+| Standalone functions | `print()`, `type()` |
+| Methods of a class | `.upper()`, `.replace()` |
+| Operators | `+`, `-`, `/`, `<`, `>`, `==`, `=`, `in`, `or` |
+
+These live in the **Standard Library**. Extra functionality comes from 3rd-party libraries (Pandas, NumPy, TensorFlow, etc.).
+
+### Modules
+Modules are reusable, importable code (e.g. `math` gives you `abs()`, `round()`, `floor()`).
+
+A type's methods only work on that type: `str` methods (`.upper()`) don't work on `int`, and vice versa (`(50).to_bytes()` isn't valid on a string, `len()` isn't valid on an `int`).
+
+### Playground
+```python
+text = "hi"
+number = 10
+
+print(type(text))     # tells you the data type
+print(type(number))
+
+print(len(text))       # works — text is a string
+# print(len(number))    # breaks — int has no length
+
+print(text.upper())            # "HI"
+print(number.bit_length())     # bytes used to store the value
+```
+
+### Challenge
+Create 5 variables, each a different data type (age, height, name, is_student, and an empty/`None` value), then print each variable's value, type, and length.
+
+---
+
+## 6. String Functions
+
+### Categories
+| Category | Functions |
+|---|---|
+| Type | `type()`, `str()` |
+| Math | `len()`, `.count()` |
+| Transform | `.replace()`, `+`, `f"{}"`, `.split()`, `*`, slicing `[0]` / `[1:3]` |
+| Clean | `.lstrip()`, `.rstrip()`, `.strip()`, `.lower()`, `.upper()` |
+| Search | `.startswith()`, `.endswith()`, `.find()`, `in` |
+| Validate | `.isalpha()`, `.isnumeric()` |
+
+### 6.1 Types
+```python
+name = "Jeff"
+print(type(name))          # <class 'str'>
+
+age = 24
+print(type(age))           # <class 'int'>
+print("Your Age is:" + str(age))   # str() here only converts for this print call
+
+age = age + 5
+age = str(age)
+print(type(age))           # now a str
+# age = age + 5             # would break — age is now a string, not an int
+```
+
+### 6.2 Math — `len()` and `.count()`
+```python
+password = "1236344634634636a"
+print(len(password))
+
+if len(password) < 8:
+    print("Your password is too short!")
+
+# .count() — how often a substring appears (case-sensitive!)
+text = """Python is easy to learn
+Python is Powerful.
+Many people love python.
+"""
+print(text.count("Python"))   # 2 — lowercase "python" doesn't match
+```
+
+### 6.3 Transform — `.replace()`
+Replacing with `""` is a handy way to strip out unwanted characters.
+```python
+price = "$1,299.99"
+print(price.replace("$", "").replace(",", ""))
+
+phone = "815-675-6849"
+print(phone.replace("-", " "))
+```
+
+**Challenge:** clean a messy international phone number down to digits only.
+```python
+phone_number = "+49 (176) 123-4567"
+print(phone_number.replace("+", "").replace("(", "").replace(")", "")
+                   .replace("-", "").replace(" ", ""))
+```
+
+### 6.4 Concatenation (`+` and f-strings)
+```python
+first_name = "Scott"
+last_name = "Michaelson"
+last_name = first_name + " " + last_name
+print(last_name)
+
+folder = "C:/Users/Jeff"
+file = "report.csv"
+full_file_path = folder + "/" + file
+print(full_file_path)
+```
+
+f-strings (`f"..."`) are the modern, cleaner way to build strings:
+```python
+name = "Jack"
+age = 34
+is_student = False
+
+# The old, verbose way:
+print("My name is " + name + ", I am " + str(age) +
+      " years old, and student status is " + str(is_student) + ".")
+
+# The f-string way:
+print(f"My name is {name}, I am {age} years old, and student status is {is_student}.")
+
+# f-strings can also evaluate expressions:
+print(f"2 + 3 = {2 + 3}")
+
+# Double the braces to print a literal { }:
+print(f"{{this is me}}")
+```
+
+### 6.5 Split — `.split()`
+Splits one string into multiple pieces on a separator.
+```python
+# "Adam-24-USA".split('-') -> ["Adam", "24", "USA"]
+
+stamp = "2026-09-20 14:30"
+print(stamp.split(" "))
+
+stamp = "2026-09-20"
+print(stamp.split("-"))
+
+csv_file = "1234,Max,USA,1970-10-05,M"
+print(csv_file.split(","))
+```
+
+### 6.6 Repetition — `*`
+```python
+print("ha" * 3)
+print("#" * 30)
+```
+
+### 6.7 Indexing & Slicing
+
+- **Indexing:** every character in a string has a position.
+  - *Positive index* — left to right, starting at `0`.
+  - *Negative index* — right to left, starting at `-1` (no `0`).
+- **Slicing `[start:end]`:** `start` is included, `end` is not.
+- **Open-ended slicing `[1:]`:** everything from index 1 onward (the `:` is required — `[1]` alone gives just one character).
+- **Step `[start:end:step]`:** skips characters as it goes.
+
+**When to use which:** positive index is easiest counting in from the left; negative is easiest counting in from the right. For a long string, pick whichever side is closer to what you want.
+
+```python
+text = "python"
+print(text[0], text[-6])   # first character, two ways
+print(text[5], text[-1])   # last character, two ways
+
+date = "2026-09-20"
+print(date[0:4])    # year
+print(date[:4])     # same result
+
+print(date[5:7])    # month
+
+print(date[8:])     # day
+print(date[-2:])    # same result
+
+print(date[0:4:2])  # every 2nd character in the year
+```
+
+### 6.8 Cleaning — whitespace strip
+- `.lstrip()` — removes from the **left** only
+- `.rstrip()` — removes from the **right** only
+- `.strip()` — removes from **both** sides
+- Only trims the *edges*, not the middle — and works on any character, not just spaces.
+
+```python
+print(" Engineering".lstrip())
+print("Engineering ".rstrip())
+print("     Engineering ".strip())
+print("###abc###".strip("#"))
+```
+
+**Use case — detect hidden whitespace:**
+```python
+text = "  Engineering"
+nr_of_spaces = len(text) - len(text.strip())
+is_clean = len(text) == len(text.strip())
+print("Nr of Spaces:", nr_of_spaces)
+print("Is my Data Clean?", is_clean)
+```
+
+### 6.9 Case conversion
+Useful for normalizing data before comparing/searching it.
+```python
+text = "python PROGRAMMING"
+print(text.lower())
+print(text.upper())
+
+search = "email".lower().strip()
+data = "Email".lower().strip()
+print(search == data)
+```
+
+### 6.10 Challenge — clean a messy record
+Turn `"968-Maria, ( D@t@ Engineer ) ;;  27y  "` into `Name: Maria | role: data engineer | age: 27`
+
+```python
+text = "968-Maria, ( D@t@ Engineer ) ;;  27y  "
+
+# Drop the leading id
+maria = text.split("-", 1)[1]
+
+# Split name from the rest
+name, rest = maria.split(",", 1)
+name = name.strip()
+
+# Pull role out of the parentheses
+role = rest.split("(")[1].split(")")[0].strip().replace("@", "a").lower()
+
+# Everything after the closing paren is the age chunk
+age = rest.split(")")[1].strip(" ;").rstrip("y")
+
+print(f"Name: {name} | role: {role} | age: {age}")
+```
+
+### 6.11 Search — `.startswith()`, `.endswith()`, `in`, `.find()`
+`in` is less strict than `.startswith()`/`.endswith()` — it checks anywhere in the string.
+
+```python
+phone = "=49-176-12345"
+print(phone.startswith("=49"))
+
+email = "baraa@gmail.com"
+print(email.endswith("gmail.com"))
+
+file = "data_backup.csv"
+print(file.endswith(".csv"))
+
+print("@" in email)
+
+url = "https://api.company.com/v1/data"
+print("/api" in url)
+```
+
+`.find()` locates the position of a match — great for combining with slicing to make code dynamic:
+```python
+phone1 = "=49-176-12345"
+phone2 = "48-654-57389"
+phone3 = "0048-654-57389"
+
+# Dynamic — works regardless of prefix length, unlike a hardcoded phone2[3:]
+print(phone1[phone1.find("-")+1:])
+print(phone2[phone2.find("-")+1:])
+print(phone3[phone3.find("-")+1:])
+print(phone1.find("-"))
+```
+
+### 6.12 Validation — `.isalpha()`, `.isnumeric()`
+Useful for catching invalid input before it goes further.
+```python
+country = "USA"
+print(country.isalpha())      # True — letters only
+
+phone = "0854-085048"
+print(phone.isnumeric())      # False — contains a "-"
+```
+
+---
+
+## 7. Numeric Functions
+
+### Number types
+- `int` — whole numbers: `5`, `-12`, `10000`
+- `float` — decimals: `3.15`, `-0.5`, `100.00`
+- `complex` — real + imaginary numbers (advanced math/engineering/physics)
+
+### Reference
+| Category | Functions |
+|---|---|
+| Type | `type()`, `int()`, `float()`, `complex()` |
+| Math operators | `+`, `-`, `*`, `/`, `//`, `%`, `**` |
+| Rounding | `abs()`, `round()`, `ceil()`, `floor()`, `trunc()` |
+| Advanced math | `sqrt()`, `sin()`, `cos()`, `log()` |
+| Random | `random()`, `randint()` |
+| Validation | `.is_integer()`, `isinstance()` |
+
